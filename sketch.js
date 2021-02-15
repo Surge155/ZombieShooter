@@ -56,8 +56,10 @@ function setup() {
     play.scale = 0.5;
 
   //Sounds
-    mainSound.play();
-    mainSound.loop();
+    
+      mainSound.play();
+      mainSound.loop();
+    
 
     //Safearea
     stroke("red");
@@ -86,6 +88,7 @@ function draw() {
     if(mousePressedOver(play)){
       gamestate = play;
     }
+    mainSound.stop();
   }  
 
     else if(gamestate === play){
@@ -97,6 +100,8 @@ function draw() {
         if(keyDown("down")){
           player.velocityY = 13;
         }
+
+        mainSound.play();
 
         //SafeArea
         safeArea.visible = true;
@@ -123,6 +128,7 @@ function draw() {
         if(zombieGroup.isTouching(safeArea)){
           gamestate = end;
           gameOverSound.play();
+          mainSound.stop(); 
         }
     }
 
@@ -137,10 +143,13 @@ function draw() {
       if(keyDown("space")){
         gamestate = neutral;
       }
-      mainSound.stop();
+      
+      
       safeArea.visible = false;
     }
-
+    /*if(gamestate === play){
+      mainSound.play();
+    }*/
     console.log(gamestate);
   //Draw The Sprites 
     drawSprites();
@@ -171,7 +180,7 @@ function spawnBullets(){
     bullet.y = player.y;
     bullet.addImage(bulletI);
     bulletGroup.add(bullet);
-    bullet.velocityX = 6;
+    bullet.velocityX = 9;
     bullet.scale = 0.07;
     bulletSound.play();
     return bullet;
